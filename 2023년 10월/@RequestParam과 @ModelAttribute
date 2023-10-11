@@ -83,7 +83,7 @@ public String main5 (@RequestParam(required=true) int year) {
 ```java
 @RequestMapping("/getYoilMVC5")
 public String main(@ModelAttribute Mydate date, BindingResult result) {
-    //~~~
+    //...
 }
 ```
 http://localhost/ch2/getYoilMVC5?year=2021&month=10&day=1
@@ -105,4 +105,3 @@ BindingResult는 바인딩할 객체의 바로 뒤에 있어야함
     - 결과나 에러를 BindingResult에 저장
 2. 데이터 검증
     - 결과나 에러를 BindingResult에 저장
-
