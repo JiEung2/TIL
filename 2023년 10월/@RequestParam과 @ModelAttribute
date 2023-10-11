@@ -1,0 +1,108 @@
+# @RequestParma과 @ModelAttribute
+
+## 1. RequestParam
+    요청의 파라미터를 연결할 매개변수에 붙이는 애너테이션
+
+
+### 예시
+``` java
+@RequestMapping("/requestParam2)
+// public String main2 (@RequestParam(name="year", required=false) String year) { // 아래와 동일
+// 생략가능 밑처럼 작성해도 됨. "year"는 파라미터 이름
+// required는 필수여부
+public String main2(String year) {
+    // http://localhost/ch2/requestParam2   -->> year=null  //널 값
+    // http://localhost/ch2/requestParma2?year  -->>year="" //빈 문자열
+    System.out.printf("[%s]year[%s]%n", new Date(), year);
+    return "yoil";
+}
+```
+
+``` java
+@RequestMapping("/requestParam3)
+// public String main3 (@RequestParam(name="year", required=true) String year) { // 아래와 동일
+public String main3(@RequestParam String year) {
+    // http://localhost/ch2/requestParam3   -->> year=null  400 Bad Request. required=true 이기 때문에
+    // http://localhost/ch2/requestParma3?year  -->>year="" 
+    System.out.printf("[%s]year[%s]%n", new Date(), year);
+    return "yoil";
+}
+```
+
+``` java
+@RequestMapping("/requestParam4)
+public String main4 (@RequestParam(required=false) int year) {
+    // 이건 파라미터가 필수는 아니지만 int year로 변환이 되어야됨 그래서 null이랑 빈 문자열을 int로 변환할 수 없어서 나는 에러
+    // http://localhost/ch2/requestParam4   -->> year=null  500 에러 (서버 에러)
+    // http://localhost/ch2/requestParma4?year  -->>year="" 400 에러 (클라이언트 에러)
+    System.out.printf("[%s]year[%s]%n", new Date(), year);
+    return "yoil";
+}
+```
+
+``` java
+@RequestMapping("/requestParam5)
+public String main5 (@RequestParam(required=true) int year) {
+    // http://localhost/ch2/requestParam5   -->> 400 에러
+    // http://localhost/ch2/requestParma5?year  -->> 400 에러
+    System.out.printf("[%s]year[%s]%n", new Date(), year);
+    return "yoil";
+}
+```
+
+필수입력일 때는 예외처리를 주고, 필수입력이 아닐 땐 default 값을 줘라
+
+## @ModelAttribute
+    적용 대상을 Model의 속성으로 자동 추가해주는 애너테이션
+    반환 타입 또는 컨트롤러 메서드의 매개변수에 적용 가능
+
+``` java
+@RequestMapping("getToilMVC5")
+// public String main(@ModelAttribute("myDate") Mydate date, Model m) {
+    public String main(@ModelAttribute Mydate date, Model m) { // 위와 동일
+    // @ModelAttribute 생략 가능 (참조형)
+    // ...
+        char yoil = getYoil(date);
+
+        // 3. Model에 작업한 결과를 저장
+        m.addAttribute("myDate", date);
+        m.addAttribute("yoil", yoil);
+
+        // 4. 작업 결과를 보여줄 뷰의 이름을 반환
+        return "yoil";
+    }
+}
+```
+
+컨트롤러 매개변수
+1. @RequestParam: 기본형, String일 땐 이게 생략되어 있음
+2. @ModelAttribute: 참조형일 땐 이게 생략되어 있는 것
+
+## WebDataBinder
+
+```java
+@RequestMapping("/getYoilMVC5")
+public String main(@ModelAttribute Mydate date, BindingResult result) {
+    //~~~
+}
+```
+http://localhost/ch2/getYoilMVC5?year=2021&month=10&day=1
+
+|name|value
+|--|--|
+|"year"|"2021"
+|"month"|"10"
+|"day"|"1"
+
+이 값들이 모두 String타입으로 저장되어 있음  
+근데 이제 MyDate에서 필요한건 int타입의 yeaar,month,day  
+그래서 그걸 WebDataBinder에서 변환시켜줌
+
+BindingResult를 컨트롤러에 넘겨줘서 보고 작업 가능
+BindingResult는 바인딩할 객체의 바로 뒤에 있어야함
+
+1. 타입 변환
+    - 결과나 에러를 BindingResult에 저장
+2. 데이터 검증
+    - 결과나 에러를 BindingResult에 저장
+
