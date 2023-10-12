@@ -7,6 +7,6 @@ public class test {
     public static void main(String[] args) {
         String[] arr = new String[100];
         String x = "dfdf";
-        
+
     }
 }
