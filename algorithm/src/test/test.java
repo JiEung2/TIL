@@ -2,92 +2,39 @@ package test;
 import java.util.*;
 public class test {
     public static void main(String[] args) {
-        String[] park = {"SOO","OOO","OOO"};
-        String[] routes = {"E 2","W 2","W 1"};
+        String[] keymap = {"i", "drink", "water"};
+        String[] targets = {"want", "to"};
+        String[] goal = {"i", "want", "to", "drink", "water"};
         test t = new test();
-        for(int x : t.solution(park, routes)) {
-            System.out.println(x);
-        }
+        System.out.println(t.solution(keymap, targets, goal));
+
+        String skip;
+        List<String> list = new ArrayList<>();
+
 
     }
-    public int[] solution(String[] park, String[] routes) {
-        int[] answer = new int[2];
-        int x=-1, y=-1;
+    public String solution(String[] cards1, String[] cards2, String[] goal) {
+        String answer = "Yes";
+        Queue<String> queue = new LinkedList<>();
+        Queue<String> queue2 = new LinkedList<>();
 
-        for(int i=0; i<park.length; i++){
-            if(park[i].indexOf('S') != -1) {
-                x = park[i].indexOf('S');
-                y = i;
-            }
+        for(String tmp : cards1){
+            queue.add(tmp);
         }
-        System.out.println(x);
-        System.out.println(y);
-
-        for(int i=0; i<routes.length; i++){
-            String[] tmp = routes[i].split(" ");
-            String direction = tmp[0];
-            int move = Integer.parseInt(tmp[1]);
-
-            if(direction.equals("E")){
-                boolean flag = true;
-                for(int j=1; j<=move; j++){
-                    if(park[0].length() <= (x+j)){
-                        flag = false;
-                        break;
-                    }
-                    else if(park[y].charAt(x+j) == 'X'){
-                        flag = false;
-                        break;
-                    }
-                }
-                if(flag) x += move;
-            }
-            else if(direction.equals("W")){
-                boolean flag = true;
-                for(int j=1; j<=move; j++){
-                    if(0 > (x-j) ){
-                        flag = false;
-                        break;
-                    }
-                    else if(park[y].charAt(x-j) == 'X'){
-                        flag = false;
-                        break;
-                    }
-                }
-                if(flag) x -= move;
-            }
-            else if(direction.equals("S")){
-                boolean flag = true;
-                for(int j=1; j<=move; j++){
-                    if(park.length <= (y+j) ){
-                        flag = false;
-                        break;
-                    }
-                    else if(park[y+j].charAt(x) == 'X'){
-                        flag = false;
-                        break;
-                    }
-                }
-                if(flag) y += move;
-            }
-            else if(direction.equals("N")){
-                boolean flag = true;
-                for(int j=1; j<=move; j++){
-                    if(0 > (y-j) ){
-                        flag = false;
-                        break;
-                    }
-                    else if(park[y-j].charAt(x) == 'X'){
-                        flag = false;
-                        break;
-                    }
-                }
-                if(flag) y -= move;
-            }
+        for(String tmp : cards2){
+            queue2.add(tmp);
         }
 
-        answer[0] = y;
-        answer[1] = x;
+        for(String tmp : goal){
+            if(tmp.equals(queue.peek())){
+                queue.poll();
+            }
+            else if(tmp.equals(queue2.peek())){
+                queue2.poll();
+            }
+            else return "No";
+        }
+
         return answer;
     }
 
