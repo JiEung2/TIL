@@ -2,59 +2,66 @@ package test;
 import java.util.*;
 public class test {
     public static void main(String[] args) {
-        String today = "17";
-//        String terms = "271";
-//        String[] goal = {"2021.05.02 A", "2021.07.01 B", "2022.02.19 C", "2022.02.20 C"};
-        test t = new test();
-//        for(int x : t.solution(today,terms)){
-//            System.out.println(x);
-//        }
-        System.out.println(t.solution(today));
+        test t= new test();
+        int k = 80;
+        int[][] dungeons = {{80,20},{50,40},{30,10}};
+        System.out.println(t.solution(k, dungeons));
 
 
     }
 
-    boolean check[] = new boolean[7];
-    List<String> list = new ArrayList<>();
-    public int solution(String numbers) {
-        int answer = 0;
+    class Solution {
+        int[][] arr;
+        public int solution(int n, int[][] wires) {
+            int answer = n;
+            arr = new int[n+1][n+1];
 
-        for(int i=0; i<numbers.length(); i++){
-            DFS(i+1, numbers, "");
-        }
-        for(int i=0; i<list.size(); i++) {
-            System.out.println(list.get(i));
-        }
 
-        for(int i=0; i<list.size(); i++){
-            if(prime(Integer.parseInt(list.get(i)))) answer++;
-        }
-
-        return answer;
-    }
-    public void DFS(int L, String numbers, String tmp){
-        if(tmp.length() == L){
-            if(!list.contains(tmp)) list.add(tmp);
-            return;
-        }
-
-        for(int i=0; i<numbers.length(); i++){
-            if(!check[i]){
-                tmp += numbers.charAt(i);
-                check[i] = true;
-                DFS(L, numbers, tmp);
-                check[i] = false;
-                tmp = tmp.substring(0, tmp.length()-1);
+            for(int i=0; i<wires.length; i++){
+                arr[wires[i][0]][wires[i][1]] = 1;
+                arr[wires[i][1]][wires[i][0]] = 1;
             }
+
+            int n1 = 0, n2 = 0;
+
+            for(int i=0; i<wires.length; i++){
+                n1 = wires[i][0];
+                n2 = wires[i][1];
+
+                arr[n1][n2] = 0;
+                arr[n2][n1] = 0;
+
+                answer = Math.min(answer, BFS(n, n1));
+
+                arr[n1][n2] = 1;
+                arr[n2][n1] = 1;
+            }
+
+            return answer;
         }
-        return;
-    }
-    public boolean prime(int n){
-        if(n == 0 || n == 1) return false;
-        for(int i=2; i<n; i++){
-            if(n%i==0) return false;
+
+        public int BFS(int n, int n1){
+            int cnt = 1;
+            boolean[] check = new boolean[n+1];
+
+            Queue<Integer> queue = new LinkedList<>();
+            queue.add(n1);
+
+            while(!queue.isEmpty()){
+                int point= queue.poll();
+                check[point] = true;
+
+                for(int i=1; i<n+1; i++){
+                    if(check[i]) continue;
+                    if(arr[point][i]==1) {
+                        queue.add(i);
+                        cnt++;
+                    }
+                }
+            }
+            return (int)Math.abs(n-2*cnt);
         }
-        return true;
     }
+
 
 }
