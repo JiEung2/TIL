@@ -3,63 +3,40 @@ import java.util.*;
 public class test {
     public static void main(String[] args) {
         test t= new test();
-        int k = 80;
-        int[][] dungeons = {{80,20},{50,40},{30,10}};
-        System.out.println(t.solution(k, dungeons));
+        String babbling[] = {"ayaye", "uuu", "yeye", "yemawoo", "ayaayaa"};
+        System.out.println(t.solution(babbling));
 
 
     }
 
-    class Solution {
-        int[][] arr;
-        public int solution(int n, int[][] wires) {
-            int answer = n;
-            arr = new int[n+1][n+1];
+    List<String> list = new ArrayList<>();
+    boolean[] check = new boolean[4];
+    public int solution(String[] babbling) {
+        int answer = 0;
 
-
-            for(int i=0; i<wires.length; i++){
-                arr[wires[i][0]][wires[i][1]] = 1;
-                arr[wires[i][1]][wires[i][0]] = 1;
-            }
-
-            int n1 = 0, n2 = 0;
-
-            for(int i=0; i<wires.length; i++){
-                n1 = wires[i][0];
-                n2 = wires[i][1];
-
-                arr[n1][n2] = 0;
-                arr[n2][n1] = 0;
-
-                answer = Math.min(answer, BFS(n, n1));
-
-                arr[n1][n2] = 1;
-                arr[n2][n1] = 1;
-            }
-
-            return answer;
+        String[] words = {"aya", "ye", "woo", "ma"};
+        for(int i=0; i<words.length; i++){
+            check[i] = true;
+            DFS(words[i], words);
+            check[i] = false;
         }
+        for(String word : babbling){
+            if(list.contains(word)) answer++;
+        }
+        return answer;
+    }
 
-        public int BFS(int n, int n1){
-            int cnt = 1;
-            boolean[] check = new boolean[n+1];
-
-            Queue<Integer> queue = new LinkedList<>();
-            queue.add(n1);
-
-            while(!queue.isEmpty()){
-                int point= queue.poll();
-                check[point] = true;
-
-                for(int i=1; i<n+1; i++){
-                    if(check[i]) continue;
-                    if(arr[point][i]==1) {
-                        queue.add(i);
-                        cnt++;
-                    }
-                }
+    public void DFS(String word, String[] words){
+        System.out.println(word);
+        list.add(word);
+        for(int i=0; i<words.length; i++){
+            if(check[i]) continue;
+            check[i] = true;
+            DFS(word+words[i], words);
+            check[i] = false;
+            if (word.length() >= words[i].length()) {
+                word = word.substring(0, word.length() - words[i].length());
             }
-            return (int)Math.abs(n-2*cnt);
         }
     }
 
