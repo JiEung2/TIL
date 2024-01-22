@@ -186,4 +186,35 @@ class Vehicle {
   - printer에 대한 인터페이스를 구현해두면 프린터를 교체할 때마다 번거로운 작업을 할 필요가 없음
 - 인터페이스를 통한 간접적인 클래스 사용으로 손쉬운 모듈 교체 지원
 - 서로 상속의 관계가 없는 클래스들에게 인터페이스를 통한 관계 부여로 다형성 확장
+  - 휴대폰과 카메라 충전
 - 모듈 간 독립적 프로그래밍 가능 -> 개발 기간 단축
+  - 계산기 구현하는 두 팀의 작업
+
+### default method
+- 인터페이스에 선언 된 `구현부가 있는 일반 메서드`
+  - 메서드 선언부에 default modifier 추가 후 메서드 구현부 작성
+    - 접근 제한자는 public으로 한정됨(생략 가능)
+      ```java
+      interface DefaultMethodInterface {
+        void abstractMethod();
+
+        default void defaultMethod() {
+          System.out.println("이것은 기본 메서드입니다.");
+        }
+      }
+      ```
+- 필요성
+  - 기존에 interface 기반으로 동작하는 라이브러리의 interface에 추가해야 하는 기능이 발생
+  - abstract 메서드는 모든 구현체들이 추가되는 메서드를 override 해야 함
+  - default 메서드는 abstract가 아니므로 반드시 구현 해야 할 필요는 없어짐
+- default method의 충돌
+  - JDK 1.7 이하의 java에서는 interface method에 구현부가 없으므로 충돌이 없었음
+  - 1.8부터 default method가 생기면서 동일한 이름을 갖는 구현부가 있는 메서드가 충돌
+  - method 우선 순위
+    - super class의 method 우선: super class가 구체적인 메서드를 갖는 경우 default method는 무시됨
+    - interface간의 충돌: 하나의 interface에서 default method를 제공하고 다른 interface에서도 같은 이름의 메서드(default 유무와 무관)가 있을 때 sub class는 반드시 override 해서 충돌 해결!!
+
+### static method
+- interface에 선언된 static method
+  - 일반 static 메서드와 마찬가지로 별도의 객체가 필요 없음
+  - 구현체 클래스 없이 바로 인터페이스 이름으로 메서드에 접근해서 사용 가능

@@ -169,3 +169,35 @@ void afterPoly() {
         SpiderMan sman = (SpiderMan) person;
     }
     ```
+
+### 참조 변수의 레벨에 따른 객체의 멤버 연결 ⭐⭐⭐⭐
+![!\[Alt text\](image.png)](Java_04-02.png)
+```java
+public class MemberBindingTest{
+    public static void main(String[] args){
+        SubClass subClass = new SubClass();
+        System.out.println(subClass.x); //얘는 당연히 sub가 나옴
+        subClass.method();
+
+        SuperClass superClass = subClass;
+        System.out.println(superClass.x);
+        superClass.method();
+        //얘는 원래는 super가 나오는게 맞는데 그림 왼쪽에서 method()가 자식클래스에서 오버라이딩 되어 있다면, 자식 클래스의 method를 실행
+    }
+}
+```
+
+- 정적 바인딩(static binding)
+  - 컴파일 단계에서 참조 변수의 타입에 따라 연결이 달라짐
+  - 상속 관계에서 객체의 멤버 변수(static/instance)가 중복될 때 또는 static method
+
+- 동적 바인딩(dynamic binding)
+  - 다형성을 이용해서 메서드 호출이 발생할 때 runtime에 메모리의 실제 객체의 타입으로 결정
+  - 상속 관계에서 객체의 instance method가 재정의 되었을 때 마지막에 재정의 된 자식 클래스의 메서드가 호출됨
+    - 최대한 메모리에 생성된 실제 객체의 최적화 된 메서드가 동작한다.
+
+||정적 바인딩|동적 바인딩|
+|:---:|:---:|:---:|
+|수행 속도|상대적으로 빠름|상대적으로 느림|
+|메모리 공간 활용 효율|상대적으로 높음|상대적으로 낮음|
+|객체 지향적||다형성으로 효율적인 코드 재사용 가능|
