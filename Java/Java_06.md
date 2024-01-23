@@ -202,3 +202,51 @@ System.out.println("설치 종료");
     - 단 해당 객체들이 AutoCloseable interface를 구현할 것
         - 각종 I/O stream, socket, connection ...
     - 해당 객체는 try 블록에서 다시 할당될 수 없음
+
+### throws 키워드를 통한 처리 위임
+- method에서 처리해야 할 하나 이상의 예외를 호출한 곳으로 전달(처리 위임)
+    - 예외가 없어지는 것이 아니라 단순히 전달됨
+    - 예외를 전달받은 메서드는 다시 예외 처리의 책임 발생
+    ```java
+    void exceptionMethod() throws Exception1, Exception2 ...{
+        //예외 발생 코드
+    }
+
+    void methodCaller(){
+        try{
+            exceptionMethod();
+        } catch(Exception e){}
+    }
+    ```
+
+### checked exception과 throws
+- checked exception은 반드시 try~catch 또는 throws 필요
+- 필요한 곳에서 try~catch 처리
+
+### runtime exception과 throws
+- runtime exception은 throws 하지 않아도 전달되지만
+- 하지만 결국은 try~catch로 처리해야 함
+
+### 로그 분석과 예외의 추적
+- Throwable의 printStackTrace는 메서드 호출 스택 정보 조회 가능
+    - 최초 호출 메서드에서부터 예외 발생 메서드까지의 스택 정보 출력
+- 꼭 확인해야할 정보
+    - 어떤 예외인가? - 예외 종류
+    - 예외 객체의 메시지는 무엇인가? - 예외 원인
+    - 어디서 발생했는가? - 디버깅 출발점
+        - 직접 작성한 코드를 디버깅 대상으로 삼을 것
+        - 참조하는 라이브러리(java.xx등)는 과감히 건너뛰기
+
+### throws의 목적과 API 활용
+- API가 제공하는 메서드들은 사전에 예외가 발생할 수 있음을 선언부에 명시하고 프로그래머가 그 예외에 대처 하도록 강요
+
+### 메서드 재정의와 throws
+- 메서드 재정의 시 조상 클래스 메서드가 던지는 예외보다 부모예외를 던질 수 없다.
+    - 부모가 치지 않은 사고를 자식이 칠 수 없다.
+
+### 예외 변환
+- 하위 계층에서 발생한 예외는 상위 계층에 맞는 예외로 바꿔서 던져야 한다.
+    ![!\[Alt text\](image.png)](Java_06-4.png)
+- Exception Chaining
+    - 하위 계층에서 발생한 예외 정보가 상위 계층의 예외를 디버깅하는데 유용할 경우 사용
+        - 하위 계층의 예외를 원인으로 상위 계층에서 예외를 발생
