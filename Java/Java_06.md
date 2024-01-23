@@ -128,3 +128,77 @@ try{
 
 ### 다중 exception handling를 이용한 Checked Exception 처리
 ![!\[Alt text\](image.png)](Java_06-3.png)
+
+### try ~ catch ~ finally 구문을 이용한 예외 처리
+- finally는 예외 발생 여부와 상관 없이 언제나 실행
+    - 중간에 return을 만나는 경우도 finally 블록을 먼저 수행 후 리턴 실행
+    ```java
+    try {
+        // exception이 발생할 만한 코드 - System 자원 사용
+    }catch(Exception e) {
+        // XXException 발생 시 처리코드
+    } finally {
+        // try bolock에서 접근했던 System자원의 안전한 원상복구
+    }
+    ```
+
+    ```java
+    public static void main(String[] args) {
+        int num = new Random().nextInt(2);
+        try{
+            System.out.println("code 1, num: " + num);
+            int i = 1 / num;
+            System.out.println("code 2 - 예외 없음");
+            return;
+        } catch (ArithmeticException e){
+            System.out.println("code 3 - exception handling 완료");
+        } finally {
+            System.out.println("code 4 - 언제나 실행;")
+        }
+        System.out.println("code 5");
+    }
+    ```
+
+- finally를 이용한 자원 정리
+```java
+InstallApp app = new InstallApp();
+try{
+    app.copy();
+    app.install();
+    app.delete();
+} catch (Exception e){
+    app.delete();
+    e.printStackTrace();
+}
+//어차피 모든 구역에서 delete를 해줘야함 그래서 finally 사용
+
+InstallApp app = new InstallApp();
+try{
+    app.copy();
+    app.install();
+} catch (Exception e){
+    e.printStackTrace();
+} finally{
+    app.delete();
+}
+System.out.println("설치 종료");
+//그냥 finally안쓰고 그냥 try밖에 app.delete();하면 안되나?
+```
+
+### try ~ catch ~ finally 구문을 이용한 예외 처리
+- 주요 목적: try 블록에서 사용한 리소스 반납
+- 생성한 시스템 자원을 반납하지 않으면 장래 resource leak 발생 가능 -> close 처리 (무한정 파일을 열 수 없기 때문. OS별로 열 수 있는 개수가 정해져 있음.)
+
+### try-with-resources
+- JDK 1.7 이상에서 리소스의 자동 close 처리
+    ```java
+    try(리소스_타입1 res1 초기화; 리소스_타입2 res2 = 초기화; ...){
+        // 예외 발생 코드
+    }catch(Exception e){
+        // exception handling 코드
+    }
+    ```
+- try 선언문에 선언된 객체들에 대해 자동 close 호출(finally 역할)
+    - 단 해당 객체들이 AutoCloseable interface를 구현할 것
+        - 각종 I/O stream, socket, connection ...
+    - 해당 객체는 try 블록에서 다시 할당될 수 없음
