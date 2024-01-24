@@ -108,3 +108,31 @@ CRUD
 - 조회: containsKey(Object key), containsValue(Object value), entrySet(), keySet(), get(Object key), values(), size(), isEmpty()
 - 삭제: clear(), remove(Object key)
 - 수정: put(K key, V value), putAll(Map<? extends K, ? extends V> m)
+
+### 정렬
+- 요소를 특정 기준에 대한 내림차순 또는 오름차순으로 배치 하는 것
+- 순서를 가지는 Collection들만 정렬 가능
+    - List 계열
+    - Set에서는 SortedSet의 자식 객체
+    - Map에서는 SortedMap의 자식 객체(key 기준)
+
+- Collections의 sort()를 이용한 정렬
+    - sort(List<T> list)
+        - 객체가 Comparable을 구현하고 있는 경우 내장 알고리즘을 통해 정렬
+
+- Comparable interface
+```java
+public interface Comparable<T> {
+    public int compareTo(T o);
+}
+```
+```
+양수: 자리 바꿈
+음수: 자리 유지
+0: 동일 위치
+```
+
+### Comparator의 활용
+- 객체가 Comparable을 구현하고 있지 않거나 사용자 정의 알고리즘으로 정렬하려는 경우
+    - String을 알파벳 순이 아닌 글자 수 별로 정렬하려면?
+- sort(List<T> list, Comparator<? Super T> c)
