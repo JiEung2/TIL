@@ -61,7 +61,6 @@
 
 ### @Enumerated
 enum 타입을 매핑할 때 사용
-<<<<<<< HEAD
 
 `주의! ORDINAL 사용X`
 - EnumType.ORDINAL: enum 순서를 데이터베이스에 저장
@@ -86,5 +85,3 @@ enum 타입을 매핑할 때 사용
 - 주로 메모리상에서만 임시로 어떤 값을 보관하고 싶을 때 사용
 - @Transient  
   private Integer temp;
-=======
->>>>>>> 992c4300a9f31361ad7bacc9a88a5c97ea4440e5
