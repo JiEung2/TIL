@@ -61,3 +61,27 @@
 
 ### @Enumerated
 enum 타입을 매핑할 때 사용
+
+`주의! ORDINAL 사용X`
+- EnumType.ORDINAL: enum 순서를 데이터베이스에 저장
+- EnumType.STRING: enum 이름을 데이터베이스에 저장
+기본값 = EnumType.ORDINAL
+
+### @Temporal
+- 날짜 타입(java.util.Dat, java.util.Calendar)을 매핑할 때 사용
+
+- 참고: LocalDate, LocalDateTime을 사용할 때는 생략 가능(최신 하이버네이트 지원)
+
+### @Lob
+- 데이터베이스 BLOB, CLOB 타입과 매핑
+  - @Lob에는 지정할 수 있는 속성이 없음
+  - 매핑하는 필드 타입이 문자면 CLOB 매핑, 나머지는 BLOB 매핑
+    - CLOB: String, char[], java.sql.CLOB
+    - BLOB: byte[], java.sql.BLOB
+  
+### Transient
+- 필드 매핑X
+- 데이터베이스에 저장X, 조회X
+- 주로 메모리상에서만 임시로 어떤 값을 보관하고 싶을 때 사용
+- @Transient  
+  private Integer temp;
