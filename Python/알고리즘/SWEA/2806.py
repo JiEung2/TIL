@@ -1,6 +1,6 @@
 def check(x):
     for i in range(x):
-        if board[x] == board[i] or abs(board[x] - board[i]) == x - i:
+        if board[x] == board[i] or board[x] - board[i] == x - i:
             return False
     return True
 
