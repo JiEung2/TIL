@@ -43,4 +43,53 @@
         }
     ```
 
-### 너
+## 너비 우선 탐색 - 인접 행렬
+```java
+static void bfs(int[][] adjMatrix, int start){
+    int V = adjMatrix.length;
+
+    Queue<Integer> queue = new ArrayDeque<>();
+    boolean[] visited = new boolean[V];
+
+    queue.offer(start);
+    visited[start] = true;
+
+    while(!queue.isEmpty()){
+        int current = queue.poll();
+        System.out.println((char)(current+65));
+        for(int i = 0 ; i < V; i++){
+            if(adjMatrix[current][i] != 0   // 인접정점 체크
+                && !visited[i]){    // 방문 여부 체크
+                    queue.offer(i);
+                    visited[i] = true;
+                }
+        }
+    }
+}
+```
+
+## 너비 우선 탐색 - 인접 리스트
+```java
+static void bfs(Node[] adjList, int start){
+    int V = adjMatrix.length;
+
+    Queue<Integer> queue = new ArrayDeque<>();
+    boolean[] visited = new boolean[V];
+
+    queue.offer(start);
+    visited[start] = true;
+
+    while(!queue.isEmpty()){
+        int current = queue.poll();
+        System.out.println((char)(current+65));
+        for(Node temp=adjList[current]; temp != null; temp = temp.next){
+            if(!visited[temp.to]){    // 방문 여부 체크
+                    queue.offer(temp.to);
+                    visited[temp.to] = true;
+                }
+        }
+    }
+}
+```
+
+## 너비 우선 탐색 - 최단 경로
