@@ -260,3 +260,183 @@ preOrder(1)
 postOrder(1)
 inOrder(1)
 ```
+
+## 이진 탐색 트리
+- 탐색 작업을 효율적으로 하기 위한 자료구조
+- 모든 원소는 서로 다른 유일한 키를 갖는다.
+- key(왼쪽 서브트리) < key(루트 노드) < key(오른쪽 서브트리)
+- 왼쪽 서브트리와 오른쪽 서브트리도 이진 탐색 트리다.
+- 중위 순회하면 오름차순으로 정렬된 값을 얻을 수 있다.
+
+### 이진 탐색 트리 - 연산
+- 탐색연산
+    - 루트에서 시작한다.
+    - 탐색할 키 값 x를 루트 노드의 키 값과 비교한다.
+        - (키 값x = 루트노드의 키 값)인 경우: 원하는 원소를 찾았으므로 탐색 연산 성공
+        - (키 값x < 루트노드의 키 값)인 경우: 루트노드의 왼쪽 서브트리에 대해서 탐색연산 수행
+        - (키 값x > 루트노드의 키 값)인 경우: 루트노드의 오른쪽 서브트리에 대해서 탐색연산 수행
+    - 서브트리에 대해서 순환적으로 탐색 연산을 반복
+
+- 삽입연산
+    1) 먼저 탐색 연산을 수행
+        - 삽입할 원소와 같은 원소가 트리에 있으면 삽입할 수 없으므로, 같은 원소가 트리에 있는지 탐색하여 확인한다.
+        - 탐색에서 탐색 실패가 결정되는 위치가 삽입 위치가 된다.
+    2) 탐색 실패한 위치에 원소를 삽입한다.
+        - 다음 예는 5를 삽입하는 예  
+        ![Alt text](Tree-8.png)
+
+### 이진 탐색 트리 - 성능
+- 탐색(searching), 삽입(insertion), 삭제(deletion) 시간은 트리의 높이 만큼 시간이 걸린다.
+    - O(h), h: BST의 깊이(height)
+- 평균의 경우
+    - 이진트리가 균형적으로 생성되어 있는 경우
+    - O(log n)
+- 최악의 경우
+    - 한쪽으로 치우친 경사 이진트리의 경우
+    - O(n)
+    - 순차탐색과 시간복잡도가 같다.
+
+- 검색 알고리즘의 비교
+    - 배열에서의 순차 검색: O(N)
+    - 정렬된 배열에서의 순차 검색: O(N)
+    - 정렬된 배열에서의 이진탐색: O(logN)
+        - 고정 배열 크기와 삽입, 삭제 시 추가 연산 필요
+    - 이진 탐색트리에서의 평군: O(logN)
+        - 최악의 경우: O(N)
+        - 완전 이진 트리 또는 균형트리로 바꿀 수 있다면 최악의 경우를 없앨 수 있다.
+            - 새로운 원소를 삽입할 때 삽입 시간을 줄인다.
+            - 평균과 최악의 시간이 같다. O(logn)
+    - 해쉬 검색: O(1)
+        - 추가 저장 공간이 필요
+- 상용에서 검색을 위해 어떤 알고리즘을 사용할까?
+
+## 힙(heap)
+- 완전 이진 트리에 있는 노드 중에서 키값이 가장 큰 노드나 키값이 가장 작은 노드를 찾기 위해서 만든 자료구조
+- 최대 힙(max heap)
+    - 키값이 가장 큰 노드를 찾기 위한 `완전 이진 트리`
+    - {부모노드의 키값 > 자식노드의 키값}
+    - 루트 노드: 키값이 가장 큰 노드
+- 최소 힙(min heap)
+    - 키값이 가장 작은 노드를 찾기 위한 `완전 이진 트리`
+    - {부모노드의 키값 < 자식노드의 키값}
+    - 루트 노드: 키값이 가장 작은 노드
+
+- 힙 연산 - 삽입  
+![Alt text](Tree-9.png)  
+![Alt text](Tree-10.png)  
+
+- 힙 연산 - 삭제
+    - 힙에서는 루트 노드의 원소만을 삭제할 수 있다.
+    - 루트 노드의 원소를 삭제하여 반환한다.
+    - 힙의 종류에 따라 최대값 또는 최소값을 구할 수 있다.  
+![Alt text](Tree-11.png)
+      
+```python
+# 최대 힙
+def enq(n):
+    global last
+    last += 1   # 마지막 노드 추가(완전이진트리 유지)
+    h[last] = n # 마지막 노드에 데이터 삽입
+    c = last    # 부모>자식 비교를 위해
+    p = c//2    # 부모번호 계산
+    while p>=1 and h[p]<h[c]:   # 부모가 있는데, 더 작으면
+        h[p], h[c] = h[c], h[p] # 교환
+        c = p
+        p = c//2
+
+def deq(n):
+    global last
+    tmp = h[last]   # 루트의 키값 보관
+    h[1] = h[last]
+    last -= 1
+    p = 1           # 새로 옮긴 루트
+    c = p*2
+    while c<=last:  # 자식이 있으면
+        if c+1 <= last and h[c] < h[c+1]: # 오른쪽자식이 있고 더 크면
+            c += 1
+        if h[p] < h[c]:
+            h[p], h[c] = h[c], h[p]
+            p = c
+            c = p*2
+
+N = 10          # 필요한 노드 수
+h = [0]*(N+1)   # 최대 힙
+last = 0        # 힙의 마지막 노드 번호
+```
+
+## 오프라인 강의
+```python
+def insert(data):
+    idx = 1
+    while TREE[idx]:
+        if TREE[idx] > data:
+            idx *= 2
+        else:
+            idx = idx*2 + 1
+    TREE[idx] = data
+    
+# 찾으면 index, 못찾으면 -1
+def find(key):
+    idx = 1
+    while TREE[idx]:
+        if TREE[idx] == key:
+            return idx
+        if TREE[idx] < key:
+            idx = idx*2 + 1
+        else:
+            idx *= 2
+    return -1
+    
+TREE = [0] * 100
+for data in [9, 4, 12, 3, 6, 15, 13, 17]:
+    insert(data)
+```
+
+### 최대힙
+```python
+def enqueue(data):
+    global last
+    
+    last += 1
+    TREE[last] = data
+    
+    c = last
+    p = last // 2
+    
+    while p:
+        if TREE[p] < TREE[c]:
+            TREE[p], TREE[c] = TREE[c], TREE[p]
+            c = p
+            p = c // 2
+        else:
+            break
+    
+    print(TREE)
+
+def dequeue():
+    global last
+    result = TREE[1]
+    # 힙을 재구성
+    TREE[1] = TREE[last]
+    last -= 1
+    p = 1
+    c = p * 2
+
+    while c <= last:
+        if c + 1 <= last and TREE[c] < TREE[c + 1]:
+            c += 1
+        if TREE[p] < TREE[c]:
+            TREE[p], TREE[c] = TREE[c], TREE[p]
+            p = c
+            c = p * 2
+        else:
+            break
+    print(last, TREE)
+    return result
+    
+    
+TREE = [0] * 100
+last = 0
+for data in [20, 15, 19, 24, 22]:
+    enqueue(data)
+```
