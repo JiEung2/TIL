@@ -41,3 +41,86 @@
 - 상향식 방법으로 최적해의 값을 계산
   - 가장 작은 부분 문제부터 해를 구한 뒤 테이블에 저장한다.
   - 테이블에 저장되어 있는 부분 문제의 해를 이용하여 점차적으로 상위 부분 문제의 최적해를 구한다.(상향식 방법)
+  
+## 이항 계수 구하기 1
+### 다음 수식의 ?의 값은?
+- (x + y)^4 = x^4 + 4x^3y + ?x^2y^2+ 4xy^3 +y^4
+- (x + y)^n을 전개했을 때 x^ky^(n-k)의 값은?  
+![img.png](DynamicProgramming-1.png)
+![img.png](DynamicProgramming-2.png)
+
+### 이항정리는
+- 이항 다항식 x + y의 거듭제곱 (x + y)^n에 대해서, 전개한 각 항 x^k * y^(n-k)의 계수 값을 구하는 정리이다.
+- 구체적으로 x^k * y^(n-k)의 계수는 n개에서 k개를 고르는 조합의 가짓수인 nCk이고 이를 이항계수라고 부른다.
+- 예를 들어, n=2, n=3, 그리고 n=4일 경우에는 다음과 같다.  
+![img.png](DynamicProgramming-3.png)
+
+### 이항 계수 구하기  
+![img.png](DynamicProgramming-4.png)
+
+- 이항계수 nCk를 구하는 재귀함수
+```
+comb(n, k)
+  IF n==k or k==0: RETURN 1
+  ELSE: RETURN comb(n-1, k-1) + comb(n-1, k)
+```
+-> 이거 파스칼 삼각형이랑 같음
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+import java.util.jar.JarEntry;
+
+public class BinomialCoefTest {
+    // nCk
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(st.nextToken());
+
+        int[][] B = new int[n + 1][k + 1];
+
+        for(int i = 0; i <= n; i++){
+            for (int j = 0, end = Math.min(i, k); j <= end; ++j) {
+                if(j == 0 || j == i) B[i][j] = 1;
+                else B[i][j] = B[i-1][j-1] + B[i-1][j];
+            }
+        }
+        
+        System.out.println(B[n][k]);
+    }
+}
+```
+
+### 최소 동전 수 구하기
+```java
+import jdk.internal.util.xml.impl.Input;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+
+public class MinCoinTest {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
+        int[] D = new int[n + 1];
+
+        D[9] = 0;
+        for (int i = 1; i <= n; i++) {
+            int min = D[i-1] + 1;
+            if(i >= 4) min = Math.min(D[i - 4] + 1, min);
+            if(i >= 6) min = Math.min(D[i - 6] + 1, min);
+
+            D[i] = min;
+        }
+        System.out.println(Arrays.toString(D));
+        System.out.println(D[n]);
+    }
+}
+
+```
