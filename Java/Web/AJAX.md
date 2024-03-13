@@ -95,7 +95,7 @@
 - 직렬화(serialize)
     - 객체를 문자열로 변환하는 작업
     - 통신을 할 때는 문자열로 직렬화 하여 주고 받는 것이 안전함
-    - 사용법: JSON.stringify(JSON 객체)
+    - 사용법: JSON.stwringify(JSON 객체)
     
 - 역 직렬화(deserialize)
     - 문자열을 객체로 변환하는 작업
