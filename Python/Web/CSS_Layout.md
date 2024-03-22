@@ -9,7 +9,7 @@
 - 이 때 지정되는 요소의 너비와 높이는 컨텐츠 영역을 대상으로 함  
   ![img.png](CSS_Layout-1.png)
       
-<h3>CSS가 width 값을 계산하는 기준</h5>
+### CSS가 width 값을 계산하는 기준
 - CSS는 border가 아닌 content의 크기를 width 값으로 지정
 - 그래서 box-sizing을 border-box로 지정해주는 것이 관리하기 편함
 - border까지가 우리가 보는 박스의 크기이기 때문
@@ -158,6 +158,11 @@ Display, Position, Float, Flexbox 등
     
 - Flex Item 관련 속성
     - align-self, flex-grow, flex-basis, order
+
+### 목적에 따른 속성 분류
+- 배치 - flex-direction, flex-wrap
+- 공간 분배 - justify-content, align-content
+- align-items, align-self
     
 ### 8. flex-grow
 - 남는 행 여백을 비율에 따라 각 flex item에 분배
