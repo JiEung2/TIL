@@ -35,5 +35,5 @@ for tc in range(T):
     n = int(input())
     lst = list(map(int, input().split()))
 
-    result = merge_sort(lst)
-    print(f'#{tc+1} {result[n//2]} {cnt}')
+    result_cnt = merge_sort(lst)
+    print(f'#{tc+1} {result_cnt[n // 2]} {cnt}')

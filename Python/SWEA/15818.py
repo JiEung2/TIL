@@ -17,5 +17,5 @@ for tc in range(T):
         node, number = map(int, input().split())
         TREE[node] = number
 
-    result = dc(L)
-    print(f'#{tc+1} {result}')
+    result_cnt = dc(L)
+    print(f'#{tc+1} {result_cnt}')

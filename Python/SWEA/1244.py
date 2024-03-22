@@ -63,7 +63,7 @@
 #     print(f'#{tc+1} {result}')
 
 def dfs(L):
-    global result
+    global result_cnt
     if L == N:
         result = max(result, int(''.join(map(str, numbers))))
         return
@@ -84,6 +84,6 @@ for tc in range(T):
     N = int(N)
     numbers = list(map(int, numbers))
     visited = []
-    result = 0
+    result_cnt = 0
     dfs(0)
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

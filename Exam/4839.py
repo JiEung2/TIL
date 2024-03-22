@@ -16,10 +16,10 @@ for tc in range(T):
     b = binary_search(1, P, B, 0)
 
     if a < b:
-        result = 'A'
+        result_cnt = 'A'
     elif a > b:
-        result = 'B'
+        result_cnt = 'B'
     else:
-        result = 0
+        result_cnt = 0
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

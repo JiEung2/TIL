@@ -24,6 +24,6 @@ T = int(input())
 
 for tc in range(T):
     sudoku = [list(map(int, input().split())) for _ in range(9)]
-    result = check_sudoku(sudoku)
+    result_cnt = check_sudoku(sudoku)
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

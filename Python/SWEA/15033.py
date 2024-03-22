@@ -21,5 +21,5 @@ for tc in range(T):
     N = int(input())
     arr = list(map(int, input().split()))
 
-    result = divide(0, N-1)
-    print(f'#{tc+1} {result+1}')
+    result_cnt = divide(0, N - 1)
+    print(f'#{tc+1} {result_cnt + 1}')

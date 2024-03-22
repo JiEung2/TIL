@@ -10,14 +10,14 @@ for tc in range(T):
     N = int(input())
     numbers = input()
 
-    result = 0
+    result_cnt = 0
     cnt = 0
     for i in range(N):
         if int(numbers[i]) == 1:
             cnt += 1
         if int(numbers[i]) == 0 or i == N-1:
-            if result < cnt:
-                result = cnt
+            if result_cnt < cnt:
+                result_cnt = cnt
             cnt = 0
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

@@ -9,10 +9,10 @@ for tc in range(T):
 
     work.sort(key=lambda x: x[1])
     now = 0
-    result = 0
+    result_cnt = 0
     for i in range(len(work)):
         if work[i][0] >= now:
-            result += 1
+            result_cnt += 1
             now = work[i][1]
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

@@ -8,26 +8,26 @@ T = 10
 for tc in range(T):
     N = int(input())
     s = input()
-    result = ''
+    result_cnt = ''
     stack = []
 
     prio = {'+': 1, '*': 2}
 
     for c in s:
         if c.isdigit():
-            result += c
+            result_cnt += c
         else:
             if stack and prio[stack[-1]] < prio[c]:
                     stack.append(c)
             else:
                 while stack and prio[stack[-1]] >= prio[c]:
-                    result += stack.pop()
+                    result_cnt += stack.pop()
                 stack.append(c)
 
     while stack:
-        result += stack.pop()
+        result_cnt += stack.pop()
 
-    for c in result:
+    for c in result_cnt:
         if c.isdigit():
             stack.append(int(c))
         else:

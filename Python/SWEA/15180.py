@@ -29,5 +29,5 @@ for tc in range(T):
     for i in lst:
         enqueue(i)
 
-    result = sum_parent(N//2)
-    print(f'#{tc+1} {result}')
+    result_cnt = sum_parent(N // 2)
+    print(f'#{tc+1} {result_cnt}')

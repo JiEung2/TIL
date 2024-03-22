@@ -21,7 +21,7 @@ for tc in range(T):
     q = deque()
     visited = [[0] * M for _ in range(N)]
 
-    result = 0
+    result_cnt = 0
     for i in range(N):
         for j in range(M):
             if Map[i][j] == 'W':
@@ -36,6 +36,6 @@ for tc in range(T):
 
     for i in range(N):
         for j in range(M):
-            result += visited[i][j]
+            result_cnt += visited[i][j]
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

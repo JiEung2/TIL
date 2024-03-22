@@ -156,7 +156,7 @@ for tc in range(T):
         if int(i) != '0':
             real_code.append(i)
 
-    result = 0
+    result_cnt = 0
     visited = []
 
     for binary_code in real_code:
@@ -182,7 +182,7 @@ for tc in range(T):
             if len(decode) == 8:
                 if ((decode[0] + decode[2] + decode[4] + decode[6]) * 3 + decode[1] + decode[3] + decode[5] + decode[7]) % 10 == 0:
                     if decode not in visited:
-                        result += sum(decode)
+                        result_cnt += sum(decode)
                         visited.append(decode)
                 decode = []
-    print(f"#{tc+1} {result}")
+    print(f"#{tc+1} {result_cnt}")

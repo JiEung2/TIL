@@ -184,8 +184,9 @@ print(squared_numbers) # [1, 4, 9, 16, 25]
 
 list(expression for 변수 in iterable if 조건식)
 ```
+
 ```py
-result = [i for i in range(10) if i % 2 == 1]
+result_cnt = [i for i in range(10) if i % 2 == 1]
 ```
 
 ### Comprehension을 남용하지 말자.

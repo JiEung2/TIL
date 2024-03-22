@@ -24,9 +24,9 @@ for tc in range(T):
             b = stack.pop()
             stack.append(calc(b, a, c))
         else:
-            result = stack.pop()
+            result_cnt = stack.pop()
             if stack:
                 print(f'#{tc + 1} error')
                 break
             else:
-                print(f'#{tc + 1} {result}')
+                print(f'#{tc + 1} {result_cnt}')

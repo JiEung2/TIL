@@ -19,16 +19,16 @@ for tc in range(T):
     lst = list(map(int, input().split()))
     card1 = [0] * 10
     card2 = [0] * 10
-    result = 0
+    result_cnt = 0
 
     for i in range(0, len(lst), 2):
         card1[lst[i]] += 1
         if check(card1):
-            result = 1
+            result_cnt = 1
             break
         card2[lst[i+1]] += 1
         if check(card2):
-            result = 2
+            result_cnt = 2
             break
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

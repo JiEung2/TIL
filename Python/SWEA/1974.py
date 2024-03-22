@@ -25,5 +25,5 @@ T = int(input())
 
 for tc in range(T):
     arr = [list(map(int, input().split())) for _ in range(9)]
-    result = check(arr)
-    print(f'{tc+1} {result}')
+    result_cnt = check(arr)
+    print(f'{tc+1} {result_cnt}')

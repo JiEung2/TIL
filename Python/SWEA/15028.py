@@ -15,7 +15,7 @@ for tc in range(T):
                     stack.append(ch)
             else:
                 stack.append(ch)
-    result = 1
+    result_cnt = 1
     if stack:
-        result = 0
-    print(f'#{tc+1} {result}')
+        result_cnt = 0
+    print(f'#{tc+1} {result_cnt}')

@@ -26,8 +26,8 @@ for tc in range(T):
     for i in range(0, 8, 2):
         sum1 += int(i_code[i])
         sum2 += int(i_code[i+1])
-    result = 0
+    result_cnt = 0
     if (sum1*3 + sum2) % 10 == 0:
-        result = sum1 + sum2
+        result_cnt = sum1 + sum2
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

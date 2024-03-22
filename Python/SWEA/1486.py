@@ -1,5 +1,5 @@
 def dfs(k, sumV):
-    global result
+    global result_cnt
     if sumV > result:
         return
 
@@ -20,10 +20,10 @@ def dfs(k, sumV):
 T = int(input())
 
 for tc in range(T):
-    result = float('inf')
+    result_cnt = float('inf')
     n, b = map(int, input().split())
     people = list(map(int, input().split()))
     visited = [0] * n
 
     dfs(0, 0)
-    print(f'#{tc+1} {result - b}')
+    print(f'#{tc+1} {result_cnt - b}')

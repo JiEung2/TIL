@@ -12,5 +12,5 @@ for tc in range(T):
         else:
             i += 1
 
-    result = len(A) - (len(B) * cnt) + cnt
-    print(f'#{tc+1} {result}')
+    result_cnt = len(A) - (len(B) * cnt) + cnt
+    print(f'#{tc+1} {result_cnt}')

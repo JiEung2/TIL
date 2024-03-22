@@ -19,6 +19,6 @@ T = int(input())
 for tc in range(T):
     N, M = map(int, input().split())
     s = [list(input()) for _ in range(N)]
-    result = check(s, N, M)
+    result_cnt = check(s, N, M)
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

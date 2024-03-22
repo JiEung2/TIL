@@ -22,11 +22,11 @@ for tc in range(T):
     people = [i for i in range(n)]
     p = [i for i in range(n)]
 
-    result = set()
+    result_cnt = set()
     for i in range(0, len(lst), 2):
         union(lst[i]-1, lst[i+1]-1)
 
     for i in range(n):
-        result.add(find_set(i))
+        result_cnt.add(find_set(i))
 
-    print(f'#{tc+1} {len(result)}')
+    print(f'#{tc+1} {len(result_cnt)}')

@@ -26,7 +26,7 @@ for tc in range(10):
 
     max_index = 0
     min_index = 0
-    result = 0
+    result_cnt = 0
     for i in range(N):
         max_index = find_max(arr)
         min_index = find_min(arr)
@@ -37,5 +37,5 @@ for tc in range(10):
         arr[max_index] -= 1
         arr[min_index] += 1
 
-    result = arr[find_max(arr)] - arr[find_min(arr)]
-    print(f'#{tc+1} {result}')
+    result_cnt = arr[find_max(arr)] - arr[find_min(arr)]
+    print(f'#{tc+1} {result_cnt}')

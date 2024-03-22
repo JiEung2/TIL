@@ -21,10 +21,10 @@ for tc in range(10):
     input()
     s = [input() for _ in range(N)]
 
-    result = 0
+    result_cnt = 0
     for i in range(N, 0, -1):
-        result = check(s, N, i)
-        if result != 0:
+        result_cnt = check(s, N, i)
+        if result_cnt != 0:
             break
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

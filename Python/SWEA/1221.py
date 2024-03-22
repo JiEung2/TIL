@@ -34,12 +34,12 @@ for tc in range(1, T+1):
                 minP = j
         num_list[i], num_list[minP] = num_list[minP], num_list[i]
 
-    result = []
+    result_cnt = []
 
     for number in num_list:
         for key in order.keys():
             if order[key] == number:
-                result.append(key)
+                result_cnt.append(key)
 
 
     print(f'{tc_num}', *num_list)

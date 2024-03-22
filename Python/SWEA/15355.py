@@ -9,12 +9,12 @@ for tc in range(T):
     t.sort()
     wi = len(w) - 1
     ti = len(t) - 1
-    result = 0
+    result_cnt = 0
 
     while wi >= 0 and ti >= 0:
         if w[wi] <= t[ti]:
-            result += w[wi]
+            result_cnt += w[wi]
             ti -= 1
         wi -= 1
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

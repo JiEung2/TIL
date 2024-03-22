@@ -1,5 +1,5 @@
 def dfs(index, power, cnt):
-    global result
+    global result_cnt
 
     if cnt > result:
         return
@@ -15,10 +15,10 @@ def dfs(index, power, cnt):
 T = int(input())
 
 for tc in range(T):
-    result = float('inf')
+    result_cnt = float('inf')
     arr = list(map(int, input().split()))
     n = arr[0]
 
     dfs(1, arr[1], 0)
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')
 

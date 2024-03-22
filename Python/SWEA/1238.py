@@ -25,11 +25,11 @@ for tc in range(T):
     visited = [0] * 101
 
     bfs(s)
-    result = 0
+    result_cnt = 0
     max = 0
     for i in range(100, -1, -1):
         if max < visited[i]:
             max = visited[i]
-            result = i
+            result_cnt = i
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

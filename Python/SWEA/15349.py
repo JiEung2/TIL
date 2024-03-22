@@ -15,8 +15,8 @@ T = int(input())
 for tc in range(T):
     N, hexS = input().split()
 
-    result = ''
+    result_cnt = ''
     for ch in hexS:
-        result += hexTobin(ch)
+        result_cnt += hexTobin(ch)
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

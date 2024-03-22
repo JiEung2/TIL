@@ -6,7 +6,7 @@ for tc in range(T):
 
     dx = [1, 0, -1, 0]
     dy = [0, -1, 0, 1]
-    result = 0
+    result_cnt = 0
 
     for i in range(N):
         for j in range(M):
@@ -24,8 +24,8 @@ for tc in range(T):
                     now += 1
                     nx += dx[d]
                     ny += dy[d]
-            if result < sumV:
-                result = sumV
+            if result_cnt < sumV:
+                result_cnt = sumV
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')
 

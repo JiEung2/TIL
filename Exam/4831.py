@@ -7,14 +7,14 @@ for tc in range(T):
     M += 2
     now = 0
     cnt = 0
-    result = 0
+    result_cnt = 0
 
     for i in range(1, M):
         if arr[i] - arr[i-1] > K:
-            result = 0
+            result_cnt = 0
             break
         if now + K < arr[i]:
             cnt += 1
             now = arr[i-1]
-            result = cnt
-    print(f'#{tc+1} {result}')
+            result_cnt = cnt
+    print(f'#{tc+1} {result_cnt}')

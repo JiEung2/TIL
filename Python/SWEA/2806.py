@@ -5,7 +5,7 @@ def check(x):
     return True
 
 def dfs(x):
-    global result
+    global result_cnt
 
     if x == N:
         result += 1
@@ -22,8 +22,8 @@ for tc in range(T):
     N = int(input())
 
     board = [0] * N
-    result = 0
+    result_cnt = 0
 
     dfs(0)
 
-    print(f'#{tc+1} {result}')
+    print(f'#{tc+1} {result_cnt}')

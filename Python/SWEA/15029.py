@@ -26,6 +26,6 @@ for tc in range(T):
         graph[i][j] = 1
 
     S, G = map(int, input().split())
-    result = dfs(S, G)
-    print(f'#{tc+1} {result}')
+    result_cnt = dfs(S, G)
+    print(f'#{tc+1} {result_cnt}')
 

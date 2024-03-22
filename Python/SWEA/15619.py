@@ -24,7 +24,7 @@ def prim(now):
 T = int(input())
 
 for tc in range(T):
-    result = float('inf')
+    result_cnt = float('inf')
     V, E = map(int, input().split())
     V += 1
     G = [[0] * V for _ in range(V)]

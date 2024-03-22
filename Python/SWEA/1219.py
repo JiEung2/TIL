@@ -23,5 +23,5 @@ for _ in range(10):
         G[lst[i]].append(lst[i+1])
 
     d = 99
-    result = dfs(0)
-    print(f'#{tc} {result}')
+    result_cnt = dfs(0)
+    print(f'#{tc} {result_cnt}')

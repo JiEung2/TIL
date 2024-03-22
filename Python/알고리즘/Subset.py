@@ -81,7 +81,7 @@
 # recur_g(0)
 
 N = 10
-result = [-1] * N
+result_cnt = [-1] * N
 numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 def subSum(k, curS):
@@ -89,15 +89,15 @@ def subSum(k, curS):
         return
     if k == N:
         if curS == 10:
-            print(result)
+            print(result_cnt)
             for i in range(N):
-                if result[i]:
+                if result_cnt[i]:
                     print(numbers[i], end='')
                 print()
         return
 
     for d in [0, 1]:
-        result[k] = d
+        result_cnt[k] = d
         if d == 0:
             subSum(k + 1, curS)
         else:
