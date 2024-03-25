@@ -27,20 +27,20 @@ ex) HTML, Markdown
 ## Structure of HTML
 
 ### HTML 구조
-- <!DOCTYPE html>
+- `<!DOCTYPE html>`
     - 해당 문서가 html로 문서라는 것을 나타냄
     
-- <html></html>
+- `<html></html>`
     - 전체 페이지의 콘텐츠를 포함
   
-- <title></title>
+- `<title></title>`
     - 브라우저 탭 및 즐겨찾기 시 표시되는 제목으로 사용
   
-- <head></head>
+- `<head></head>`
     - HTML 문서에 관련된 설명, 설정 등
     - 사용자에게 보이지 않음
   
-- <body></body>
+- `<body></body>`
     - 페이지에 표시되는 모든 콘텐츠
   
 ### HTML Element(요소)
@@ -69,7 +69,7 @@ HTML의 주요 목적 중 하나는 텍스트 구조와 의미를 제공하는 �
 - Lists
   - ol, ul, li
   
-Emphasis & Importance
+- Emphasis & Importance
   - em, strong
 
 ## 웹 스타일링
@@ -116,11 +116,12 @@ HTML 요소를 선택하여 스타일을 적용할 수 있도록 하는 선택�
   
 - 자손 결합자(" "(space))
   - 첫 번째 요소의 자손 요소들 선택
-  - ex) p span은 <p> 안에 있는 모든 <span>를 선택(하위 레벨 상관 없이)
+  - ex) p span은 `<p>` 안에 있는 모든 `<span>`를 선택(하위 레벨 상관 없이)
   
 - 자식 결합자(">")
   - 첫 번째 요소의 직계 자식만 선택
-  - ex) ul > li은 <ul> 안에 있는 모든 <li>를 선택(한 단계 아래 자식들만)
+  - ex) ul > li은 `<ul>` 안에 있는 모든 `<li>`를 선택(한 단계 아래 자식들만)  
+
 
 ### Specificity(명시도)
 결과적으로 요소에 적용할 CSS 선언을 결정하기 위한 알고리즘  
