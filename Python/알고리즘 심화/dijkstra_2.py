@@ -1,6 +1,4 @@
 INF = int(1e6)
-
-
 def dijk(now):
     U = []
     D = [INF] * V

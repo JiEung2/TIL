@@ -88,7 +88,7 @@ $ pip list
 - 사용하려는 패키지가 설치되지 않았거나, 호환되는 버전이 아니면 오류가 발생하거나 예상치 못한 동작을 보일 수 있음
 
 4. 의존성 패키지 목록 생성
-```ssh
+```shell
 $ pip freeze > requirements.txt
 ```
 
@@ -225,3 +225,63 @@ Django에서 애플리케이션을 구조화하는 패턴
 ## 요청과 응답
 ### Django와 요청 & 응답
 ![img.png](Intro&DesignPattern-2.png)
+
+### URLs
+- url 경로는 반드시 `/` 로 끝나야 함
+- from articles import views → articles 패키지에서 views 모듈을 가져오는 것
+- urls.py는 요청 들어오는 ulr에 따라 적절한 view를 연결해주는 역할
+
+### View
+- 특정 경로에 있는 template과 request 객체를 결합해 응답 객체를 반환하는 index view 함수 정의
+- 모든 view 함수는 첫번째 인자로 request 요청 객체를 필수적으로 받음
+- 매개변수 이름이 request가 아니어도 되지만 그렇게 작성하지 않음
+
+### Template
+- 앱 폴더 안에 templates 폴더 생성
+- 폴더명은 반드시 templates여야 하며 개발자가 직접 생성해야함
+- html 파일을 가지고 있음
+- django에서 template을 인식하는 경로는 app폴더 / templates /가 기본임
+- 그래서 view함수에서 template 경로 작성 시 이 시점 이후의 경로를 작성해야 함
+
+따라서 데이터 흐름은 URLs -> View -> Template
+
+### MTV 디자인 패턴 정리
+- Model
+  - 데이터와 관련된 로직을 관리
+  - 응용프로그램의 데이터 구조를 정의하고 데이터베이스의 기록을 관리
+  
+- Template
+  - 레이아웃과 화면을 처리
+  - 화면 상의 사용자 인터페이스 구조와 레이아웃을 정의
+
+- View
+  - Model & Template과 관련한 로직을 처리해서 응답을 반환
+  - 클라이언트의 요청에 대해 처리를 분기하는 역할
+
+- View 예시
+  - 데이터가 필요하다면 model에 접근해서 데이터를 가져오고,
+  - 가져온 데이터를 template으로 보내 화면을 구성하고,
+  - 구성된 화면을 응답으로 만들어 클라이언트에게 반환
+
+### render
+- 주이진 템플릿을 주어진 컨텍스트 데이터와 결합하고 렌더링 된 텍스트와 함께 HttpResponse 응답 객체를 반환하는 함수
+
+1. request
+   - 응답을 생성하는데 사용되는 요청 객체
+   
+2. template_name
+   - 템플릿 이름의 경로
+
+3. context
+   - 템플릿에서 사용할 데이터(딕셔너리 타입으로 작성)
+
+```python
+return render(request, template_name, context)
+```
+
+### 지금까지 나온 Django의 규칙
+1. urls.py에서 각 url경로는 반드시 `/`로 끝남
+2. views.py에서 모든 view 함수는 첫번째 인자로 요청 객체를 받음
+   - 매개변수 이름은 반드시 request로 지정
+3. Django는 정해진 경로에 있는 template 파일만 읽어올 수 있음
+   - app폴더/templates/ 이후

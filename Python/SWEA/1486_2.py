@@ -27,4 +27,4 @@ for tc in range(1, T + 1):
     arr = list(map(int, input().split()))
     ans = int(1e9)
     dfs(0, 0)
-    print(abs(ans - B))
+    print(f'#{tc} {abs(ans - B)}')
