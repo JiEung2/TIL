@@ -69,7 +69,7 @@ Template에서 조건, 반복, 변수 등의 프로그래밍적 기능을 제공
     - 만약 이 속성을 지정하지 않으면 데이터는 현재 form이 있는 페이지의 URL로 보내짐
     
 - method
-    - 데이터를 어떤 방식으로 보낼 것인지정의
+    - 데이터를 어떤 방식으로 보낼 것인지 정의
     - 데이터의 HTTP request methods(GET, POST)를 지정
     
 ### 'input' element

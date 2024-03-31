@@ -184,7 +184,7 @@ Django에서 애플리케이션을 구조화하는 패턴
     - 프로젝트 폴더의 settings.py에 Installed_apps의 첫번째에 앱 이름을 넣어줌
     
 ### 프로젝트 구조
-- seetings.py
+- settings.py
     - 프로젝트의 모든 설정을 관리
 - urls.py
     - 요청 들어오는 URL에 따라 이에 해당하는 적절한 views를 연결
@@ -229,7 +229,7 @@ Django에서 애플리케이션을 구조화하는 패턴
 ### URLs
 - url 경로는 반드시 `/` 로 끝나야 함
 - from articles import views → articles 패키지에서 views 모듈을 가져오는 것
-- urls.py는 요청 들어오는 ulr에 따라 적절한 view를 연결해주는 역할
+- urls.py는 요청 들어오는 url에 따라 적절한 view를 연결해주는 역할
 
 ### View
 - 특정 경로에 있는 template과 request 객체를 결합해 응답 객체를 반환하는 index view 함수 정의
@@ -264,7 +264,7 @@ Django에서 애플리케이션을 구조화하는 패턴
   - 구성된 화면을 응답으로 만들어 클라이언트에게 반환
 
 ### render
-- 주이진 템플릿을 주어진 컨텍스트 데이터와 결합하고 렌더링 된 텍스트와 함께 HttpResponse 응답 객체를 반환하는 함수
+- 주어진 템플릿을 주어진 컨텍스트 데이터와 결합하고 렌더링 된 텍스트와 함께 HttpResponse 응답 객체를 반환하는 함수
 
 1. request
    - 응답을 생성하는데 사용되는 요청 객체
