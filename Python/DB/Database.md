@@ -129,7 +129,7 @@ SELECT column_name FROM table_name;
 - 데이터베이스로부터 정보를 요청하는 것
 - 일반적으로 SQL로 작성하는 코드를 쿼리문(SQL문)이라 함
 
-## Querying data
+## Querying data(DQL)
 ## SELECT
 ### SELECT statement
 테이블에서 데이터를 조회
@@ -143,3 +143,504 @@ FROM
 ```
 - SELECT 키워드 이후 데이터를 선택하려는 필드를 하나 이상 지정
 - FROM 키워드 이후 데이터를 선택하려는 테이블의 이름을 지정
+
+
+### SELECT 활용
+1. 하나의 필드 조회  
+   ```SQL
+   SELECT
+        LastName
+   FROM
+        emplyees;
+   ```
+   
+2. 두개의 필드 조회  
+   ```SQL
+   SELECT
+        LastName, FirstName
+   FROM
+        employees
+   ```
+      
+3. 모든 필드 조회  
+   ```SQL
+   SELECT
+        *
+   FROM 
+        employees;
+   ```
+   
+4. 하나의 필드 조회, 필드 이름 출력 변경  
+    ```SQL
+    SELECT
+        FirstName AS '이름'
+    FROM
+        employees;
+    ```
+
+4. 두개의 필드 조회, 필드 값, 이름 출력 변경  
+    ```SQL
+    SELECT
+        Name,
+        Milliseconds / 60000 AS '재생 시간(분)'
+    FROM
+        tracks;
+    ```
+
+### SELECT 정리
+- 테이블의 데이터를 조회 및 반환
+- '*' (asterisk)를 사용하여 모든 필드 선택
+
+## Sorting data
+### ORDER BY
+### ORDER BY statement
+조회 결과의 레코드를 정렬
+
+### ORDER BY syntax
+- FROMM clause 뒤에 위치
+- 하나 이상의 컬럼을 기준으로 결괄르 오름차순(ASC, 기본 값), 내림차순(DESC)으로 정렬
+
+### ORDER BY 활용
+1. 하나의 필드 데이터 오름차순 조회  
+    ```SQL
+    SELECT
+        FirstName
+    FROM
+        employees
+    ORDER BY
+        FirstName;
+    ```
+
+2. 하나의 필드 데이터 내림차순 조회  
+    ```SQL
+    SELECT
+        FirstName
+    FROM
+        employees
+    ORDER BY
+        FirstName DESC;
+    ```
+
+3. 두개의 필드 데이터 각각 정렬(Country 필드를 기준으로 내림차순 정렬한 다음 City 필드 기준으로 오름차순 정렬하여 조회)
+    ```SQL
+    SELECT
+        Country, City
+    FROM
+        customers
+    ORDER BY
+        Country DESC, City;
+    ```
+
+4. 하나의 필드를 기준으로 내림차순 정렬한 다음 두 개 필드의 모든 데이터를 조회  
+    ```SQL
+    SELECT
+        Name,
+        Milliseconds / 60000 AS '재생 시간(분)'
+    FROM
+        tracks
+    ORDER BY
+        Milliseconds DESC;
+    ```
+
+### 정렬에서의 NULL
+NULL 값이 존재할 경우 오름차순 정렬 시 결과에 NULL이 먼저 출력
+
+### SELECT statement 실행 순서
+FROM -> SELECT -> ORDER BY  
+1. 테이블에서 (FROM)
+2. 조회하여 (SELECT)
+3. 정렬 (ORDER BY)
+
+## Filtering data
+### Filtering data 관련 Keywords
+- Clause
+    - DISTINCT
+    - WHERE
+    - LIMIT
+
+- Operator
+    - BETWEEN
+    - IN
+    - LIKE
+    - Comparison
+    - Logical
+
+## DISTINCT
+### DISTINCT statement
+조회 결과에서 중복된 레코드를 제거
+
+### DISTINCT syntax
+```SQL
+SELECT DISTINCT
+    select_list
+FROM
+    table_name;
+```
+
+- SELECT 키워드 바로 뒤에 작성해야 함
+- SELECT DISTINCT 키워드 다음에 고유한 값을 선택하려는 하나 이상의 필드를 지정
+
+
+### DISTINCT 활용
+1. 한 개 필드의 모든 데이터를 중복없이 오름차순 조회  
+    ```SQL
+    SELECT DISTINCT
+        Country
+    FROM
+        customers
+    ORDER BY
+        Country;
+    ```
+
+## WHERE
+
+### WHERE statement
+조회 시 특정 검색 조건을 지정
+
+### WHERE syntax
+- FROM clause 뒤에 위치
+- search_condition은 비교연산자 및 논리연산자(AND, OR, NOT 등)를 사용하는 구문이 사용됨
+
+### WEHRE 활용
+1. 필드 값이 특정 값인 데이터 조회  
+    ```SQL
+    SELECT
+        LastName, FirstName, City
+    FROM
+        customers
+    WHERE
+        City = 'Prague';
+    ```
+
+2. 필드 값이 특정 값이 아닌 데이터 조회  
+    ```SQL
+    SELECT
+        LastName, FirstName, City
+    FROM
+        customers
+    WHERE
+        City != 'Prague';
+    ```
+
+3. 필드 값에 여러 조건  
+    ```SQL
+    SELECT
+        LastName, FirstName, Company, Country
+    FROM
+        customers
+    WHERE
+        Company IS NULL
+        AND Country = 'USA';
+    ```
+
+4. BETWEEN 활용  
+    ```SQL
+    SELECT
+        Name, Bytes
+    FROM
+        tracks
+    WHERE
+        Bytes BETWEEN 100000 AND 500000;
+    
+    -- WHERE
+    --    Bytes >= 10000
+    --    AND Bytes <= 50000;
+    ```
+
+5. ORDER BY, BETWEEN 활용  
+    ```SQL
+    SELECT
+        Name, Bytes
+    FROM
+        tracks
+    WHERE
+        Bytes BETWEEN 100000 AND 500000
+    ORDER BY Bytes;
+    ```
+
+6. OR 연산  
+    ```SQL
+    SELECT
+        LastName, FirstName, Country
+    FROM
+        customers
+    WHERE
+        Country IN ('Canada', 'Germany', 'France');
+
+    --WHERE
+    --    Country = 'Canada'
+    --    OR Country = 'Germany'
+    --    OR Country = 'France';
+    ```
+
+7. NOT IN 연산  
+    ```SQL
+    SELECT
+        LastName, FirstName, Country
+    FROM
+        customers
+    WHERE
+        Country NOT IN ('Canada', 'Germany', 'France');
+    ```
+
+8. 필드 값이 특정한 값으로 끝나는 데이터 조회  
+    ```SQL
+    SELECT
+        LastName, FirstName
+    FROM
+        customers
+    WHERE
+        LastName LIKE '%son';
+    ```
+
+9. 필드 값이 n자리 이면서 특정한 값으로 끝나는 데이터 조회  
+    ```SQL
+    SELECT
+        LastName, FirstName
+    FROM
+        customers
+    WHERE
+        FirstName LIKE '___a';
+    ```
+
+## Operators
+
+### Comparison Operators(비교 연산자)
+=, >=, <=, !=, IS, LIKE, IN, BETWEEN ... AND
+
+### Logicla Operators(논리 연산자)
+AND(&&), OR(||), NOT(!)
+
+### IN Operator
+값이 특정 목록 안에 있는지 확인
+
+### LIKE Operator
+값이 특정 패턴에 일치하는지 확인(Wildcards와 함께 사용)
+
+### Wildcard Characters
+- `%` - 0개 이상의 문자열과 일치 하는지 확인
+- `_` - 단일 문자와 일치하는지 확인
+
+
+### LIMIT clause
+조회하는 레코드 수를 제한
+
+### LIMIT syntax
+- 하나 또는 두 개의 인자를 사용 (0 또는 양의 정수)
+- row_count는 조회하는 최대 레코드 수를 지정
+
+### LIMIT & OFFSET 예시
+![alt text](Database-2.png)
+
+### LIMIT 활용
+1. 필드 데이터를 내림차순으로 n개만 조회  
+    ```SQL
+    SELECT
+        TrackId, Name, Bytes
+    FROM
+        tracks
+    ORDER BY Bytes DESC
+    LIMIT 7;
+    ```
+
+2. 필드 데이터를 내림차순으로 4번째부터 7번째 데이터만 조회  
+    ```SQL
+    SELECT
+        TrackId, Name, Bytes
+    FROM
+        tracks
+    ORDER BY
+        Bytes DESC
+    LIMIT 3, 4;
+    -- LIMIT 4 OFFSET 3;
+    ```
+
+## Grouping data
+
+### GROUP BY
+### GROUP BY clause
+레코드를 그룹화하여 요약본 생성('집계 함수'와 함께 사용)
+
+### Aggregation Functions(집계 함수)
+값에 대한 계산을 수행하고 단일한 값을 반환하는 함수(SUM, AVG, MAX, MIN, COUNT)
+
+### GROUP BY syntax
+- FROM 및 WHERE 절 뒤에 배치
+- GROUP BY 절 뒤에 그룹화 할 필드 목록을 작성
+
+### GROUP BY 예시
+1. 필드를 그룹화  
+    ```SQL
+    SELECT
+        Country
+    FROM
+        customers
+    GROUP BY
+        Country;
+    ```
+
+2. COUNT 함수가 각 그룹에 대한 집계된 값을 계산  
+    ```SQL
+    SELECT
+        Country, COUNT(*)
+    FROM
+        customers
+    GROUP BY
+        Country;
+    ```
+
+3. 특정 필드를 그룹화하여 각 그룹에 대한 Bytes의 평균 값을 내림차순 조회  
+    ```SQL
+    SELECT
+        Composer,
+        AVG(Bytes)
+    FROM
+        tracks
+    GROUP BY
+        Composer
+    ORDER BY
+        AVG(Bytes) DESC;
+    ```
+
+4. AS로 네이밍 후 그 값으로 정렬  
+    ```SQL
+    SELECT
+        Composer,
+        AVG(Bytes) AS avgOfBytes
+    FROM
+        tracks
+    GROUP BY
+        Composer
+    ORDER BY
+        avgOfBytes DESC;
+    ```
+
+5. 필드를 그룹화하여 각 그룹에 대한 필드 평균 값이 10 미만인 데이터 조회  
+    ```SQL
+    SELECT
+        Composer,
+        AVG(Milliseconds / 60000) AS avgOfMinute
+    FROM
+        tracks
+    WHERE
+        avgOFMinute < 10
+    GROUP BY
+        Composer;
+    ```  
+    -> 이렇게하면 `에러 발생`
+
+    - `HAVING` clause 사용
+        - 집계 항목에 대한 세부 조건을 지정
+        - 주로 GROUP BY와 함께 사용되며 GROUP BY가 없다면 WHERE 처럼 동작
+    ```SQL
+    SELECT
+        Composer,
+        AVG(Milliseconds / 60000) AS avgOfMinute
+    FROM
+        tracks
+    WHERE
+        avgOFMinute < 10
+    HAVING
+        Composer;
+    ```
+
+### SELECT statement 실행 순서
+FROM -> WHERE -> GROUP BY -> HAVING -> SELECT -> ORDER BY -> LIMIT  
+
+1. 테이블에서 (FROM)
+2. 특정 조건에 맞추어 (WHERE)
+3. 그룹화 하고 (GROUP BY)
+4. 만약 그룹화 조건이 있다면 맞추고 (HAVING)
+5. 조회하여 (SELECT)
+6. 정렬하고 (ORDER BY)
+7. 특정 위치의 값을 가져옴 (LIMIT)
+
+## Managing Tables(DDL)
+
+## Create a table
+### CREATE TABLE statement
+테이블 생성
+
+### CREATE TABLE syntax
+```SQL
+CREATE TABLE table_name (
+    column_1 data_type constraints,
+    column_2 data_type constraints,
+)
+```
+- 각 필드에 적용할 데이터 타입 작성
+- 테이블 및 필드에 대한 제약조건(constraints) 작성
+
+### CREATE TABLE 활용
+- example 테이블 생성 및 확인
+```SQL
+CREATE TABLE examples (
+    ExamID INTEGER PRIMARY KEY AUTOINCREMENT,
+    LastName VARCHAR(50) NOT NULL,
+    FirstName VARCHAR(50) NOT NULL
+);
+```
+
+### PRAGMA
+- 테이블 schema(구조) 확인  
+    ```SQL
+    PRAGMA table_info('examples');
+    ```
+
+- cid
+    - Column ID를 의미하며 각 컬럼의 고유한 식별자를 나타내는 정수 값
+    - 직접 사용하지 않으며 PRAGMA 명령과 같은 메타데이터 조회에서 출력 값으로 활용됨
+
+### SQLite 데이터 타입
+1. NULL  
+    - 아무런 값도 포함하지 않음을 나타냄
+
+2. INTEGER  
+    - 정수
+
+3. REAL  
+    - 부동 소수점
+
+4. TEXT  
+    - 문자열
+
+5. BLOB  
+    - 이미지, 동영상, 문서 등의 바이너리 데이터
+
+### Constraints(제약 조건)
+테이블의 필드에 적용되는 규칙 또는 제한 사항  
+-> 데이터의 무결성을 유지하고 데이터베이스의 일관성을 보장
+
+### 대표 제약 조건 3가지
+- PRIMARY KEY  
+    - 해당 필드를 기본 키로 지정
+    - INTEGER 타입에만 적용되며 INT, BIGINT 등과 같은 다른 정수 유형은 적용되지 않음
+
+- NOT NULL
+    - 해당 필드에 NULL 값을 허용하지 않도록 지정
+
+- FOREIGN KEY
+    - 다른 테이블과의 외래 키 관계를 정의
+
+### AUTOINCREMENT keyword
+자동으로 고유한 정수 값을 생성하고 할당하는 필드 속성
+
+### AUTOINCREMENT 특징
+- 필드의 자동 증가를 나타내는 특수한 키워드
+- 주로 primary key 필드에 적용
+- INTEGER PRIMARY KEY AUTOINCREMENT가 작성된 필드는 항상 새로운 레코드에 대해 이전 최대 값보다 큰 값을 할당
+- 삭제된 값은 무시되며 재사용할 수 없게 됨
+
+
+## Modifying table fields
+## ALTER TABLE
+
+### ALTER TABLE statement
+테이블 및 필드 조작
+
+### ALTER TABLE 역할
+|명령어|역할|
+|:---:|:---:|
+|ALTER TABLE ADD COLUMN|필드 추가|
+|ALTER TABLE RENAME COLUMN|필드 이름 변경|
+|ALTER TABLE RENAME TO|테이블 이름 변경|

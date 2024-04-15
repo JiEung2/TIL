@@ -2,8 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Python/과제/web_ws_2_a" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Python/과제/web_ws_2_b" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Python/과제/web_ws_2_c" vcs="Git" />
   </component>
 </project>
