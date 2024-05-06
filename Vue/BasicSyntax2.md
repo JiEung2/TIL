@@ -98,13 +98,13 @@
 - HTML template 요소에 v-if를 사용하여 하나 이상의 요소에 대해 적용할 수 있음(v-else, v-else-if 모두 적용 가능)  
 
 ```html
-<template v-if="name=== 'Cathy'">
+<template v-if="name === 'Cathy'">
   <div>Cathy입니다</div>
   <div>나이는 30살입니다</div>
 </template>
 ```
 
-### HTML <template> element
+### HTML `<template>` element
 - 페이지가 로드될 때 렌더링 되지 않지만 JavaScript를 사용하여 나중에 문서에서 사용할 수 있도록 하는 HTML을 보유하기 위한 메커니즘  
 > "보이지 않는 wrapper 역할"
 
@@ -168,4 +168,257 @@
 - number 혹은 string으로만 사용해야 함
 - Vue의 내부 가상 DOM 알고리즘이 이전 목록과 새 노드 목록을 비교할 때 각 node를 식별하는 용도로 사용  
 > Vue 내부 동작 관련된 부분이기에 최대한 작성하려고 노력할 것 
+
+## v-for with v-if
+
+### 동일 요소에 v-for와 v-if를 함께 사용하지 않는다
+동일한 요소에서 v-if가 v-for보다 우선순위가 더 높기 때문  
+> v-if 에서의 조건은 v-for 범위의 변수에 접근할 수 없음
+
+### v-for와 v-if 문제 상황
+- todo 데이터 중 이미 처리 한 (isComplete === true) todo만 출력하기  
+```html
+<ul>
+  <li v-for="todo in todos" v-if="!todo.isComplete" :key="todo.id">\
+    {{ todo.name }}
+  </li>
+</ul>
+```
+- v-if가 더 높은 우선순위를 가지므로 v-for 범위의 todo 데이터를 v-if에서 사용할 수 없음
+- -> Uncaught TypeError: Cannot read properties of undefined (reading 'isComlete')
+
+### v-for과 v-if 해결법 2가지
+1. computed 활용
+2. v-for와 `<template>` 요소 활용
+
+### v-for과 v-if 해결법 - 1
+1. computed를 활용해 필터링 된 목록을 반환하여 반복하도록 설정  
+```html
+<script>
+  const completeTodos = computed(() => {
+    return todos.value.filter((todo) => !todo.isComplete)
+  })
+</script>
+
+
+<ul>
+  <li v-for="todo in completeTodos" :key="todo.id">
+    {{ todo.name }}
+  </li>
+</ul>
+```
+
+### v-for와 v-if 해결법 - 2
+2. v-for와 template 요소를 사용하여 v-if 위치를 이동  
+```html
+<ul>
+  <template v-for="todo in todos" :key="todo.id">
+    <li v-if="!todo.isComplete">
+      {{ todo.name }}
+    </li>
+  </template>
+</ul>
+```
+
+## Watchers
+
+## watch
+### watch()
+하나 이상의 반응형 데이터를 감시하고, 감시하는 데이터가 변경되면 콜백 함수를 호출
+
+### watch 구조
+```script
+watch(source, (newValue, oldValue) => {
+  //do something
+})
+```
+- 첫번째 인자 (source)
+  - watch가 감시하는 대상 (반응형 변수, 값을 반환하는 함수 등)
+- 두번째 인자 (callback function)
+  - source가 변경될 때 호출되는 콜백 함수  
+  1. newValue
+    - 감시하는 대상이 변화된 값
+  2. oldValue(optional)
+    - 감시하는 대상의 기존 값
+
+### watch 기본 동작
+```html
+<button @click="count++">Add 1</button>
+<p>Count: {{ count }}</p>
+
+<script>
+  const count = ref(0)
+
+  watch(count, (newValue, oldValue) => {
+    console.log(`newValue: ${newValue}, oldValue: ${oldValue}`)
+  })
+</script>
+```
+
+### watch 예시
+- 감시하는 변수에 변화가 생겼을 때 연관 데이터 업데이트하기  
+
+```html
+<input v-model="message">
+<p>Message length: {{ messageLength }} </p>
+
+<script>
+  const message = ref('')
+  const messageLength = ref(0)
+
+  watch(message, (newValue) => {
+    messageLength.value = newValue.length
+  })
+</script>
+```
+
+## computed vs watch
+
+### Computed와 Watchers
+![alt text](BasicSyntax2-9.png)
+
+## Lifecycle Hooks
+### Lifecycle Hooks
+Vue 인스턴스의 생애주기 동안 특정 시점에 실행되는 함수
+
+### Lifecycle Hooks Diagram
+- 인슽턴스의 생애 주기 중간 중간에 함수를 제공하여 개발자가 특정 단계에서 원하는 로직을 작성할 수 있도록 함
+
+### Lifecycle Hooks 예시
+1. Vue 컴포턴트 인스턴스가 초기 렌더링 및 DOM 요소 생성이 완료된 후 특정 로직을 수행하기  
+```html
+<script>
+  const {createApp, ref, onMounted} = Vue
+
+  setup() {
+    onMounted(() => {
+      console.log('mounted')
+    })
+  }
+</script>
+```
+
+2. 반응형 데이터의 변경으로 인해 컴포넌트의 DOM이 업데이트된 후 특정 로직을 수행하기
+```html
+<button @click="count++">Add 1</button>
+<p>Count: {{ count }}</p>
+<p>{{ message }}</p>
+
+<script>
+  const { createApp, ref, onMounted, onUpdated } = Vue
+
+  const count = ref(0)
+  const message = ref(null)
+
+  onUpdated(() => {
+    message.value = 'updated!'
+  })
+</script>
+```
+
+### Lifecycle Hooks 특징
+- Vue는 Lifecycle Hooks에 등록된 콜백 함수들을 인스턴스와 자동으로 연결함
+- 이렇게 동작하려면 hooks 함수들은 반드시 동기적으로 작성되어야 함
+- 인스턴스 생애 주기의 여러 단계에서 호출되는 다른 hooks도 있으며, 가장 일반적으로 사용되는 것은 onMounted, onUpdated, onUnmounted
+
+## Vue Style Guide
+### Vue Style Guide
+- Vue의 스타일 가이드 규칙은 우선순위에 따라 4가지 범주로 나눔
+- 규칙 범주
+  - 우선순위 A: 필수(Essential)
+  - 우선순위 B: 적극 권장(Strongly Recommended)
+  - 우선순위 C: 권장(Recommended)
+  - 우선순위 D: 주의 필요(Use with Caution)
+
+### 우선순위 별 특징
+- A: 필수
+  - 오류를 방지하는 데 도움이 되므로 어떤 경우에도 규칙을 학습하고 준수
+
+- B: 적극 권장 
+  - 가독성 및/또는 개발자 경험을 향상시킴
+  - 규칙을 어겨도 코드는 여전히 실행되겠지만, 정당한 사유가 있어야 규칙을 위반할 수 있음
+
+- C: 권장
+  - 일관성을 보장하도록 임의의 선택을 할 수 있음
+
+- D: 주의 필요
+  - 잠재적 위험 특성을 고려함
+
+## 참고
+## computed 주의사항
+### 주의 computed의 반환 값은 변경하지 말 것
+- computed의 반환 값은 의존하는 데이터의 파생된 값
+  - 이미 의존하는 데이터에 의해 계산이 완료된 값
+- 일종의 snapshot이며 의존하는 데이터가 변경될 때만 새 snapshot이 생성됨
+- 계산된 값은 읽기 전용으로 취급되어야 하며 변경되어서는 안됨
+- 대신 새 값을 얻기 위해서는 의존하는 데이터를 업데이트 해야 함
+
+- computed에서 reverse() 및 sort() 사용 시 원본 배열을 변경하기 때문에 원본 배열의 복사본을 만들어서 진행해야 함  
+```html
+<script>
+return numbers.reverse() // X
+
+return [...numbers].reverse() // O
+</script>
+```
+
+## 배열과 v-for 관련
+### 배열 변경 관련 메서드
+- v-for와 배열을 함께 사용 시 배열의 메서드를 주의해서 사용해야 함  
+1. 변화 메서드
+  - 호출하는 원본 배열을 변경
+  - push(), pop(), shift(), unshift(), splice(), sort(), reverse()
+
+2. 배열 교체
+  - 원본 배열을 수정하지 않고 항상 새 배열을 반환
+  - filter(), concat(), slice()
+
+### v-for와 배열을 활용해 "필터링/정렬" 활용하기
+- 원본 데이터를 수정하거나 교체하지 않고 필터링하거나 정렬된 새로운 데이터를 표시하는 방법  
+  1. computed 활용
+  2. method 활용 (computed가 불가능한 중첩된 v-for의 경우 사용)
+
+1. computed 활용
+  - 원본 기반으로 필터링 된 새로운 결과를 생성  
+  ```html
+  <script>
+    const numbers = ref([1, 2, 3, 4, 5])
+
+    const evenNumbers = computed(() => {
+      return numbers.value.filter((number) => number % 2 === 0)
+    })
+  </script>
+
+  <li v-for="num in evenNumbers">{{ num }}</li>
+  ```
+
+2. method 활용
+  - computed가 불가능한 중첩된 v-for에 경우  
+  ```html
+  <script>
+    const numberSets = ref([
+      [1, 2, 3, 4, 5],
+      [6, 7, 8, 9, 10]
+    ])
+
+    const evenNumbers = function (numbers) {
+      return numbers.filter((number) => number % 2 === 0)
+    }
+  </script>
+
+  <ul v-for="numbers in numberSets">
+    <li v-for="num in evenNumbers(numbers)">{{ num }}</li>
+  </ul>
+  ```
+
+### 주의 배열의 인덱스를 v-for의 key로 사용하지 말 것
+```html
+<div v-for="(item, index) in items" :key="index">
+  <!-- content -->
+</div>  
+```
+
+- 인덱스는 식별자가 아닌 배열의 항목 위치만 나타내기 때문
+- 만약 새 요소가 배열의 끝이 아닌 위치 삽입되면 이미 반복된 구성 요소 데이터가 함께 업데이트되지 않기 때문  
+> 직접 고유한 값을 만들어내는 메서드를 만들거나 외부 라이브러리 등을 활용하는 등 식별자 역할을 할 수 있는 값을 만들어 사용
 
